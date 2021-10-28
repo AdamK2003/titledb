@@ -68,12 +68,16 @@ jobs:
           # Minimum 1 day. Maximum 90 days unless changed from the repository settings page.
       
           # retention-days: # optional
-      
           
-      - name: Update repo
-        run: |
-          git commit
-          git push
+#      - name: git Actions
+#        uses: srt32/git-actions@v0.0.3
+#        with:
+#          args: git commit; git push
+#          
+#      - name: Update repo
+#        run: |
+#          git commit
+#          git push
       
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
