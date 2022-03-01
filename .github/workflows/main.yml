@@ -52,7 +52,9 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Build TitleDB
         run: |
-          python3 nut.py -U
+          rm titledb
+          git clone https://github.com/blawar/titledb titledb
+          python3 nut.py -U --import-region US --language en
           cp titledb/titles.json ./titles.US.en.json
         
       - name: Upload a Build Artifact
