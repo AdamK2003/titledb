@@ -53,7 +53,7 @@ jobs:
       - name: Build TitleDB
         run: |
           rm -rf titledb
-          git clone https://github.com/blawar/titledb titledb
+          git clone --depth 1 https://github.com/blawar/titledb titledb
           python3 nut.py -U --import-region US --language en
           cp titledb/titles.json ./titles.US.en.json
         
