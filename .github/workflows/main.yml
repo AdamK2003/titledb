@@ -37,7 +37,7 @@ jobs:
           USESSL: openssl
           USEOPENSSL: 1.1.1d
         run: |
-          sudo apt-get install libcurl4-gnutls-dev libgnutls28-dev
+          sudo apt-get update && sudo apt-get install libcurl4-gnutls-dev libgnutls28-dev
         shell: bash
       
       - name: Install python dependencies
@@ -54,6 +54,7 @@ jobs:
         run: |
           rm -rf titledb
           git clone --depth 1 https://github.com/blawar/titledb titledb
+          touch titledb/titles.json
           python3 nut.py -U --import-region US --language en
           cp titledb/titles.json ./titles.US.en.json
         
