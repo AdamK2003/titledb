@@ -58,12 +58,16 @@ jobs:
           python3 nut.py -U --import-region US --language en
           cp titledb/titles.json ./titles.US.en.json
 
-      - name: Compress TitleDB for use with Tinfoil
+      - name: Compress TitleDB for use with Tinfoil as an index
         run: |
           (echo "{ titledb: "; cat titles.US.en.json; echo "}") > titlesIndex.json
           wget https://blawar.github.io/tinfoil/files/encrypt.py
           wget https://blawar.github.io/tinfoil/files/public.key
-          python3 encrypt.py -i titles.US.en.json -o titles.tfl -k public.key --zstd
+          python3 encrypt.py -i titlesIndex.json -o titles.tfl -k public.key --zstd
+
+        - name: Compress TitleDB for use with Tinfoil as a db cache replacement
+          run: |
+            python3 encrypt.py -i titles.US.en.json -o titles.US.en.zstd.json --zstd
         
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v2.2.4
