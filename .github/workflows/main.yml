@@ -65,9 +65,9 @@ jobs:
           wget https://blawar.github.io/tinfoil/files/public.key
           python3 encrypt.py -i titlesIndex.json -o titles.tfl -k public.key --zstd
 
-        - name: Compress TitleDB for use with Tinfoil as a db cache replacement
-          run: |
-            python3 encrypt.py -i titles.US.en.json -o titles.US.en.zstd.json --zstd
+      - name: Compress TitleDB for use with Tinfoil as a db cache replacement
+        run: |
+          python3 encrypt.py -i titles.US.en.json -o titles.US.en.zstd.json --zstd
         
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v2.2.4
