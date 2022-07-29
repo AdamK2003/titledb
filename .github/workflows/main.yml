@@ -57,6 +57,13 @@ jobs:
           touch titledb/titles.json
           python3 nut.py -U --import-region US --language en
           cp titledb/titles.json ./titles.US.en.json
+
+      - name: Compress TitleDB for use with Tinfoil
+        run: |
+          (echo "{ titledb: "; cat titles.US.en.json; echo "}") > titlesIndex.json
+          curl https://blawar.github.io/tinfoil/files/encrypt.py -O encrypt.py
+          curl https://blawar.github.io/tinfoil/files/public.key -O public.key
+          python3 encrypt.py -i titles.US.en.json -o titles.tfl -k public.key --zlib
         
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v2.2.4
@@ -64,7 +71,7 @@ jobs:
           # Artifact name
           name: titledb # optional, default is artifact
           # A file, directory or wildcard pattern that describes what to upload
-          path: ./titles.US.en.json
+          path: ./titles.*
           # The desired behavior if no files are found using the provided path.
       
           if-no-files-found: error
@@ -91,3 +98,4 @@ jobs:
           title: Update TitleDB with workflow
           files: |
             titles.US.en.json
+            titles.tfl
