@@ -60,7 +60,8 @@ jobs:
 
       - name: Compress TitleDB for use with Tinfoil as an index
         run: |
-          (echo "{ titledb: "; cat titles.US.en.json; echo "}") > titlesIndex.json
+          (echo '{ "titledb": '; cat titles.US.en.json; echo "}") > titlesIndex.json
+          python3 trim.py titlesIndex.json
           wget https://blawar.github.io/tinfoil/files/encrypt.py
           wget https://blawar.github.io/tinfoil/files/public.key
           python3 encrypt.py -i titlesIndex.json -o titles.tfl -k public.key --zstd
