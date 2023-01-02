@@ -61,6 +61,8 @@ jobs:
       - name: Compress TitleDB for use with Tinfoil as an index
         run: |
           (echo '{ "titledb": '; cat titles.US.en.json; echo "}") > titlesIndex.json
+          # Workspace is overrided by arch-box/nut, so we need to wget the trim.py
+          wget https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/${GITHUB_REF_NAME}/trim.py -O trim.py
           python3 trim.py titlesIndex.json
           wget https://blawar.github.io/tinfoil/files/encrypt.py
           wget https://blawar.github.io/tinfoil/files/public.key
