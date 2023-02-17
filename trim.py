@@ -25,4 +25,4 @@ if __name__ == '__main__':
         }
 
     with open(sys.argv[1], 'w') as f:
-        json.dump({"titledb": new_data}, f, indent=4)
+        json.dump({"titledb": new_data}, f, separators=(',', ':'))
