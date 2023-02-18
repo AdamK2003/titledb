@@ -21,31 +21,26 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           repository: arch-box/nut
-          submodules: recursive
       
-      - name: Set up Python 3.10.7
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.10.7
-          
       - name: Install Linux deps
+        uses: awalsh128/cache-apt-pkgs-action@latest
         env:
           USECURL: 7.79.0-openssl11-gssapi-libssh2
           USESSL: openssl
           USEOPENSSL: 1.1.1d
-        run: |
-          sudo apt-get update && sudo apt-get install libcurl4-gnutls-dev libgnutls28-dev
-        shell: bash
+        with:
+          packages: libcurl4-gnutls-dev libgnutls28-dev
       
-      - name: Install python dependencies
-        run: |
-          pip3 install --upgrade wheel
-          pip3 install -r requirements.txt
-          pip3 install -r requirements_dev.txt
-          pip3 install MarkupSafe==2.0.1
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.10.9
+          cache: 'pip'
+      - run: |
+          pip install -r requirements.txt
           
 
 
